@@ -1,0 +1,6 @@
+---
+- include: setup.yml
+- hosts: default
+  roles:
+  - role: ansible-zplug
+    ghq_executable: "{{ansible_env.HOME}}/.go/bin/ghq"

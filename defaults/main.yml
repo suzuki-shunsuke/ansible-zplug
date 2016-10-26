@@ -1,0 +1,4 @@
+---
+# defaults file for zplug
+ghq_executable: ghq
+zplug_home: "{{ansible_env.ZPLUG_HOME | default('{}/.zplug'.format(ansible_env.HOME))}}"

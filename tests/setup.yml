@@ -1,0 +1,10 @@
+---
+- hosts: default
+  roles:
+  - suzuki-shunsuke.git-ubuntu
+  - suzuki-shunsuke.go-ubuntu
+  - suzuki-shunsuke.go-module
+  - ghq
+  - role: suzuki-shunsuke.vim-conf
+    remote_repository_path: suzuki-shunsuke/vim.conf
+    vim_conf_ghq_executable: "{{ansible_env.HOME}}/.go/bin/ghq"

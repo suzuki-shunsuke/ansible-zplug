@@ -1,0 +1,24 @@
+---
+# tasks file for zplug
+- name: ghq root
+  shell: "{{ansible_env.HOME}}/.go/bin/ghq root"
+  register: ghq_root
+  changed_when: false
+- name: Clone zplug
+  ghq:
+    name: zplug/zplug
+    executable: "{{ghq_executable}}"
+- name: Check ZPLUG_HOME(~/.zplug)
+  stat:
+    path: "{{zplug_home}}"
+  register: st
+- name: Back up ZPLUG_HOME
+  shell: "mv {{zplug_home}} {{zplug_home}}.{{ansible_date_time.date}}-{{ansible_date_time.hour}}-{{ansible_date_time.minute}}-{{ansible_date_time.second}}"
+  when: st.stat.exists and not st.stat.islnk
+- name: Make symbolic links
+  file:
+    src: "{{ghq_root.stdout}}/github.com/zplug/zplug"
+    dest: "{{zplug_home}}"
+    state: link
+- debug:
+    msg: "source $ZPLUG_HOME/init.zsh"
